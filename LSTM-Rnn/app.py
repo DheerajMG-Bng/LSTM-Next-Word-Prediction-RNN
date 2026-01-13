@@ -2,12 +2,11 @@ import streamlit as st
 import numpy as np
 import pickle
 import requests
-from googletrans import Translator
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # -----------------------------
-# Load model & tokenizer (cached)
+# Load model & tokenizer
 # -----------------------------
 @st.cache_resource
 def load_model_and_tokenizer():
@@ -17,8 +16,6 @@ def load_model_and_tokenizer():
     return model, tokenizer
 
 model, tokenizer = load_model_and_tokenizer()
-
-translator = Translator()
 
 # -----------------------------
 # Prediction function
@@ -53,49 +50,25 @@ def get_word_definition(word):
     return "Definition not found."
 
 # -----------------------------
-# Translation
-# -----------------------------
-def translate_text(text, target_language):
-    translated = translator.translate(text, dest=target_language)
-    return translated.text
-
-# -----------------------------
 # Streamlit UI
 # -----------------------------
 st.set_page_config(
     page_title="Next Word Prediction",
     layout="wide",
-    initial_sidebar_state="expanded",
 )
 
 st.title("🔮 Next Word Prediction using LSTM")
 
 st.markdown(
     """
-This application predicts the **next most probable word(s)** using a  
-**pretrained LSTM language model trained on Shakespeare's Hamlet**.
+This app predicts the **next most probable word(s)** using an  
+**LSTM language model trained on Shakespeare's Hamlet**.
 """
 )
 
-# Text input
 input_text = st.text_input("✍️ Enter a sequence of words:")
-
-# Number of words
 num_words = st.slider("🔢 Number of words to predict:", 1, 5, 3)
 
-# Translation
-languages = {
-    "English": "en",
-    "Spanish": "es",
-    "French": "fr",
-    "German": "de",
-    "Hindi": "hi",
-}
-selected_language = st.selectbox(
-    "🌍 Translate prediction to:", list(languages.keys())
-)
-
-# Predict button
 if st.button("🔮 Predict Next Words"):
     if not input_text.strip():
         st.warning("⚠️ Please enter some text.")
@@ -109,18 +82,9 @@ if st.button("🔮 Predict Next Words"):
             predicted_sentence = " ".join(predicted_words)
             st.success(f"✨ Predicted words: **{predicted_sentence}**")
 
-            # Definitions
             with st.expander("📖 Word Definitions"):
                 for word in predicted_words:
                     definition = get_word_definition(word)
                     st.write(f"**{word.capitalize()}**: {definition}")
-
-            # Translation
-            translated_text = translate_text(
-                predicted_sentence, languages[selected_language]
-            )
-            st.write(
-                f"🌍 Translated ({selected_language}): **{translated_text}**"
-            )
         else:
             st.error("❌ No prediction could be made.")
