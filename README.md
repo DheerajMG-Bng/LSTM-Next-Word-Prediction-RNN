@@ -37,6 +37,7 @@ Model serialization using TensorFlow SavedModel
 Cloud deployment using Streamlit
 
 Model Architecture
+----------------------------------------------------------------------------------------------------------------------------------
 
 Embedding Layer
 
@@ -45,6 +46,7 @@ LSTM Layer
 Dense + Softmax Output
 
 Web Application
+----------------------------------------------------------------------------------------------------------------------------------
 
 User text input
 
@@ -55,6 +57,7 @@ Real-time inference
 Optimized model loading with caching
 
 Deployment
+----------------------------------------------------------------------------------------------------------------------------------
 
 Platform: Streamlit Community Cloud
 
