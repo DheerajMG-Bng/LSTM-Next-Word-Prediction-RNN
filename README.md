@@ -7,6 +7,8 @@ Live Demo
 
 🔗 Deployed Application:
 --> https://lstm-next-word-prediction-rnn-dheeraj-m-g.streamlit.app/
+<img width="1919" height="1079" alt="Screenshot 2026-01-15 122910" src="https://github.com/user-attachments/assets/ed4122cc-a672-4990-880e-be3ae5cfbc28" />
+
 
  Project Objective
 
